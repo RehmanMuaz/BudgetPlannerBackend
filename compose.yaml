@@ -1,0 +1,6 @@
+﻿services:
+  budgetbackend:
+    image: budgetbackend
+    build:
+      context: .
+      dockerfile: BudgetBackend/Dockerfile

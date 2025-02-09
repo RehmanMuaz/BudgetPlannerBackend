@@ -1,0 +1,6 @@
+@BudgetBackend_HostAddress = http://localhost:3000
+
+GET {{BudgetBackend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
