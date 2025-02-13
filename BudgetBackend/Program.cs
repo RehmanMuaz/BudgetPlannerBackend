@@ -1,12 +1,18 @@
+using BudgetBackend.Models;
+using BudgetBackend.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
 
 // Add services to the container.
 
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -26,6 +32,9 @@ builder.Services.AddAuthentication(options =>
         options.CallbackPath = "/auth/google/callback";
         options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     });
+
+builder.Services.AddDbContext<BudgetContext>(options => options.UseNpgsql(config.GetConnectionString("DBConnection")));
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 var app = builder.Build();
 
